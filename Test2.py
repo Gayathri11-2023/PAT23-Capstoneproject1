@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import NoSuchElementException
 import pytest
 
-from time import sleep
+
 
 # Defining a test class
 
@@ -26,28 +26,28 @@ class Test:
         # Setting up Chrome WebDriver with the WebDriver Manager
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         yield
+         # implementation of implicit wait
+        self.driver.implicitly_wait(10)
         self.driver.quit()
 
     @pytest.mark.html
     def test_login(self, boot):
-        # Opening the specified URL in the browser
-        self.driver.get(data.WebData().url)
-        # Maximizing the browser window
-        self.driver.maximize_window()
-        # Introducing a sleep delay for 7 seconds
-        sleep(7)
+        try:
+           # Opening the specified URL in the browser
+           self.driver.get(data.WebData().url)
+           # Maximizing the browser window
+           self.driver.maximize_window()
 
-        # Call the 'entertext' and 'clickbutton' method from the 'WebLocators' class to
-        # enter text into a username field , Password field and login button
+           # Call the 'entertext' and 'clickbutton' method from the 'WebLocators' class to
+           # enter text into a username field , Password field and login button
+           locator.WebLocators().entertext(self.driver, locator.WebLocators().usernameLocator, data.WebData().username)
+           locator.WebLocators().entertext(self.driver, locator.WebLocators().passwordLocator, data.WebData().wrongpassword)
+           locator.WebLocators().clickbutton(self.driver, locator.WebLocators().buttonLocator)
+           assert (self.driver.current_url != data.WebData().dashboardURL)
+           # Print a success message indicating that login was successful, along with the username and password used
+           print(f"UNSUCCESSFUL : Logged in with {data.WebData().username} and the password is {data.WebData().wrongpassword}")
+           print("Test Case-2 : Valid username and Wrong password is evaluated")
 
-        locator.WebLocators().entertext(self.driver, locator.WebLocators().usernameLocator, data.WebData().username)
-        locator.WebLocators().entertext(self.driver, locator.WebLocators().passwordLocator, data.WebData().wrongpassword)
-        locator.WebLocators().clickbutton(self.driver, locator.WebLocators().buttonLocator)
-        sleep(2)
-        assert (self.driver.current_url != data.WebData().dashboardURL)
-
-        # Print a success message indicating that login was successful, along with the username and password used
-        print(f"UNSUCCESSFUL : Logged in with {data.WebData().username} and the password is {data.WebData().wrongpassword}")
-        print("Test Case-2 : Valid username and Wrong password is evaluated")
-
-
+       except NoSuchElementException as e :
+            print("error")
+              
