@@ -15,7 +15,7 @@ import pytest
 # Defining a test class
 
 
-class Test:
+class Testcase1:
     dashboard = "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index"
 
     # pytest fixture for setting up the test environment
