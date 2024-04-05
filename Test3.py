@@ -15,7 +15,7 @@ import pytest
 # Defining a test class
 
 
-class Test:
+class Testcase3:
     dashboard = "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index"
 
     # pytest fixture for setting up the test environment
@@ -24,12 +24,12 @@ class Test:
         # Setting up Chrome WebDriver with the WebDriver Manager
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         yield
-         # implementation of implicit wait
-       self.driver.implicitly_wait(10)
+        # implementation of implicit wait
+        self.driver.implicitly_wait(10)
         self.driver.quit()
 
     @pytest.mark.html
-    def test_login(self, boot):
+    def test_addemp_details(self, boot):
         try:
            # Opening the specified URL in the browser
            self.driver.get(data.WebData().url)
